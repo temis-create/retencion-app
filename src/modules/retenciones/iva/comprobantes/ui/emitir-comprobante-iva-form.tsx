@@ -73,8 +73,8 @@ export function EmitirComprobanteIVAForm({ retenciones }: Props) {
     setError("");
 
     const res = await emitirComprobanteIVAAction(Array.from(selectedIds));
-    if (!res.success) {
-      setError(res.error || "Ocurrió un error.");
+    if (!res.success || !res.data) {
+      setError(res.error || "Ocurrió un error al emitir el comprobante.");
       setIsSubmitting(false);
     } else {
       router.push(`/fiscal/comprobantes-iva/${res.data.id}`);
