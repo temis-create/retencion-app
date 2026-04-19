@@ -1,0 +1,628 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organizacion {
+  id            String      @id @default(uuid())
+  nombre        String
+  rif           String      @unique
+  logoUrl       String?
+  emailContacto String?
+  telefono      String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  deletedAt     DateTime?
+  empresas      Empresa[]
+  membresias    Membresia[]
+  usuarios      Usuario[]
+
+  @@index([deletedAt])
+}
+
+model Usuario {
+  id              String              @id @default(uuid())
+  tenantId        String
+  nombre          String
+  email           String
+  passwordHash    String
+  activo          Boolean             @default(true)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  deletedAt       DateTime?
+  asignacionesRol AsignacionRol[]
+  exportaciones   ExportacionFiscal[]
+  logsAuditoria   LogAuditoria[]
+  tenant          Organizacion        @relation(fields: [tenantId], references: [id])
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@index([deletedAt])
+}
+
+model Rol {
+  id           String          @id @default(uuid())
+  nombre       String          @unique
+  descripcion  String?
+  permisos     Json
+  asignaciones AsignacionRol[]
+}
+
+model AsignacionRol {
+  id        String   @id @default(uuid())
+  usuarioId String
+  rolId     String
+  empresaId String?
+  createdAt DateTime @default(now())
+  empresa   Empresa? @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  rol       Rol      @relation(fields: [rolId], references: [id])
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, rolId, empresaId])
+  @@index([empresaId])
+}
+
+model Membresia {
+  id               String        @id @default(uuid())
+  tenantId         String
+  plan             PlanMembresia
+  maxEmpresas      Int?
+  maxUsuarios      Int?
+  maxDocumentos    Int?
+  fechaVencimiento DateTime?
+  activa           Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  tenant           Organizacion  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, activa])
+}
+
+model Empresa {
+  id                    String                 @id @default(uuid())
+  tenantId              String
+  nombreFiscal          String
+  rif                   String
+  direccion             String?
+  telefono              String?
+  agenteRetencionIVA    Boolean                @default(false)
+  agenteRetencionISLR   Boolean                @default(false)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  deletedAt             DateTime?
+  asignacionesRol       AsignacionRol[]
+  compras               Compra[]
+  comprobantesISLR      ComprobanteISLR[]
+  comprobantesIVA       ComprobanteIVA[]
+  tenant                Organizacion           @relation(fields: [tenantId], references: [id])
+  exportaciones         ExportacionFiscal[]
+  pagos                 Pago[]
+  parametrosFiscales    ParametroFiscal?
+  periodosFiscales      PeriodoFiscal[]
+  proveedores           Proveedor[]
+  saldosCompensacionIVA SaldoCompensacionIVA[]
+
+  @@unique([tenantId, rif])
+  @@index([tenantId])
+  @@index([deletedAt])
+}
+
+model Proveedor {
+  id                           String            @id @default(uuid())
+  tenantId                     String
+  empresaId                    String
+  nombre                       String
+  rif                          String
+  tipoPersona                  TipoPersona
+  tipoResidencia               TipoResidencia
+  tipoContribuyente            TipoContribuyente
+  porcentajeRetencionIVA       Decimal           @db.Decimal(5, 2)
+  createdAt                    DateTime          @default(now())
+  updatedAt                    DateTime          @updatedAt
+  deletedAt                    DateTime?
+  esAgentePercepcionIVA        Boolean           @default(false)
+  proveedorMarcadoRetencion100 Boolean           @default(false)
+  rifRegistrado                Boolean           @default(true)
+  rifValidadoPortalFiscalAt    DateTime?
+  rubroPercepcionIVA           String?
+  compras                      Compra[]
+  comprobantesIVA              ComprobanteIVA[]
+  comprobantesISLR             ComprobanteISLR[]
+  pagos                        Pago[]
+  empresa                      Empresa           @relation(fields: [empresaId], references: [id])
+
+  @@unique([empresaId, rif])
+  @@index([tenantId])
+  @@index([empresaId])
+  @@index([deletedAt])
+}
+
+model PeriodoFiscal {
+  id                    String                 @id @default(uuid())
+  tenantId              String
+  empresaId             String
+  anio                  Int
+  mes                   Int
+  tipoImpuesto          TipoImpuesto
+  frecuencia            FrecuenciaPeriodo
+  subperiodo            Int?
+  codigoPeriodo         String
+  fechaInicio           DateTime?
+  fechaFin              DateTime?
+  estado                EstadoPeriodoFiscal    @default(ABIERTO)
+  fechaCierre           DateTime?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  compras               Compra[]
+  exportaciones         ExportacionFiscal[]
+  pagos                 Pago[]
+  empresa               Empresa                @relation(fields: [empresaId], references: [id])
+  retencionesISLR       RetencionISLR[]
+  retencionesIVA        RetencionIVA[]
+  comprobantesISLR      ComprobanteISLR[]
+  saldosCompensacionIVA SaldoCompensacionIVA[]
+
+  @@unique([empresaId, tipoImpuesto, codigoPeriodo])
+  @@index([tenantId])
+  @@index([empresaId, anio, mes])
+  @@index([estado])
+}
+
+model UnidadTributaria {
+  id         String    @id @default(uuid())
+  valor      Decimal   @db.Decimal(18, 2)
+  fechaDesde DateTime
+  fechaHasta DateTime?
+  gaceta     String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([fechaDesde, fechaHasta])
+}
+
+model AlicuotaIVA {
+  id         String    @id @default(uuid())
+  nombre     String
+  porcentaje Decimal   @db.Decimal(5, 2)
+  fechaDesde DateTime
+  fechaHasta DateTime?
+  activa     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([activa])
+  @@index([fechaDesde, fechaHasta])
+}
+
+model ConceptoRetencionISLR {
+  id                       Int      @id @default(autoincrement())
+  codigoSeniat             String?
+  numeral                  String
+  literal                  String?
+  concepto                 String
+  sujeto                   String   // PNR, PNNR, PJD, PJND
+  baseImponiblePorcentaje  Decimal? @db.Decimal(10, 4)
+  tipoTarifa               String   // PORCENTAJE | TARIFA_2
+  porcentajeRetencion      Decimal? @db.Decimal(10, 4)
+  montoMinimoBs            Decimal? @default(0) @db.Decimal(14, 2)
+  sustraendoBs             Decimal? @default(0) @db.Decimal(14, 2)
+  usaMontoMinimo           Boolean  @default(false)
+  usaSustraendo            Boolean  @default(false)
+  requiereCalculoEspecial  Boolean  @default(false)
+  formulaEspecial          String?
+  notas                    String?
+  activo                   Boolean  @default(true)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  pagos                    Pago[]
+
+  @@index([numeral])
+  @@index([concepto])
+  @@index([sujeto])
+  @@index([codigoSeniat])
+}
+
+model TipoDocumento {
+  id          String   @id @default(uuid())
+  codigo      String   @unique
+  descripcion String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  compras     Compra[]
+}
+
+model CalendarioFiscal {
+  id                   String    @id @default(uuid())
+  anio                 Int
+  ultimoDigitoRif      Int
+  fechaVencimientoIVA  DateTime?
+  fechaVencimientoISLR DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@unique([anio, ultimoDigitoRif])
+}
+
+model ParametroFiscal {
+  id                         String   @id @default(uuid())
+  empresaId                  String   @unique
+  proximoCorrelativoIVA      Int      @default(1)
+  proximoCorrelativoISLR     Int      @default(1)
+  reinicioCorrelativoMensual Boolean  @default(true)
+  esAgenteEspecial           Boolean  @default(false)
+  porcentajeRetencionDefecto Decimal? @db.Decimal(5, 2)
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+  empresa                    Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+}
+
+model SaldoCompensacionIVA {
+  id              String        @id @default(uuid())
+  tenantId        String
+  empresaId       String
+  periodoFiscalId String
+  saldoAnterior   Decimal       @db.Decimal(18, 2)
+  montoOriginado  Decimal       @db.Decimal(18, 2)
+  montoAplicado   Decimal       @db.Decimal(18, 2)
+  saldoSiguiente  Decimal       @db.Decimal(18, 2)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  empresa         Empresa       @relation(fields: [empresaId], references: [id])
+  periodoFiscal   PeriodoFiscal @relation(fields: [periodoFiscalId], references: [id])
+
+  @@unique([empresaId, periodoFiscalId])
+  @@index([tenantId])
+}
+
+model Compra {
+  id                                 String        @id @default(uuid())
+  tenantId                           String
+  empresaId                          String
+  proveedorId                        String
+  tipoDocumentoId                    String
+  periodoFiscalId                    String
+  documentoAfectadoId                String?
+  numeroFactura                      String?
+  numeroControl                      String?
+  fechaFactura                       DateTime
+  montoExento                        Decimal       @db.Decimal(18, 2)
+  montoBase                          Decimal       @db.Decimal(18, 2)
+  impuestoIVA                        Decimal       @db.Decimal(18, 2)
+  totalFactura                       Decimal       @db.Decimal(18, 2)
+  estado                             EstadoCompra  @default(REGISTRADA)
+  tipoAjuste                         TipoAjuste?
+  motivoAjuste                       String?
+  createdAt                          DateTime      @default(now())
+  updatedAt                          DateTime      @updatedAt
+  cumpleRequisitosFormales           Boolean       @default(true)
+  esGastoReembolsable                Boolean       @default(false)
+  esOperacionArticulo2RetencionTotal Boolean       @default(false)
+  esServicioPublicoDomiciliario      Boolean       @default(false)
+  esViatico                          Boolean       @default(false)
+  ivaDiscriminado                    Boolean       @default(true)
+  montoOperacionUTSnapshot           Decimal?      @db.Decimal(18, 4)
+  naturalezaIVA                      NaturalezaIVA @default(GRAVADA)
+  porcentajeAlicuotaSnapshot         Decimal?      @db.Decimal(5, 2)
+  tienePercepcionAnticipadaIVA       Boolean       @default(false)
+  valorUTSnapshot                    Decimal?      @db.Decimal(18, 2)
+  documentoAfectado                  Compra?       @relation("DocumentoAfectadoCompra", fields: [documentoAfectadoId], references: [id], onDelete: Restrict)
+  documentosRelacionados             Compra[]      @relation("DocumentoAfectadoCompra")
+  empresa                            Empresa       @relation(fields: [empresaId], references: [id])
+  periodoFiscal                      PeriodoFiscal @relation(fields: [periodoFiscalId], references: [id])
+  proveedor                          Proveedor     @relation(fields: [proveedorId], references: [id])
+  tipoDocumento                      TipoDocumento @relation(fields: [tipoDocumentoId], references: [id])
+  pagoCompras                        PagoCompra[]
+  retencionIVA                       RetencionIVA?
+
+  @@index([tenantId])
+  @@index([empresaId, fechaFactura])
+  @@index([proveedorId])
+  @@index([periodoFiscalId])
+  @@index([documentoAfectadoId])
+}
+
+model Pago {
+  id                  String              @id @default(uuid())
+  tenantId            String
+  empresaId           String
+  proveedorId         String
+  periodoFiscalId     String
+  conceptoISLRId      Int
+  fechaPago           DateTime
+  montoTotal          Decimal             @db.Decimal(18, 2)
+  moneda              String?
+  tasaCambio          Decimal?            @db.Decimal(18, 6)
+  referencia          String?
+  tipoEventoRetencion TipoEventoRetencion
+  estado              EstadoPago          @default(PROCESADO)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  conceptoISLR        ConceptoRetencionISLR @relation(fields: [conceptoISLRId], references: [id])
+  empresa             Empresa             @relation(fields: [empresaId], references: [id])
+  periodoFiscal       PeriodoFiscal       @relation(fields: [periodoFiscalId], references: [id])
+  proveedor           Proveedor           @relation(fields: [proveedorId], references: [id])
+  pagoCompras         PagoCompra[]
+  retencionesISLR     RetencionISLR[]
+
+  @@index([tenantId])
+  @@index([empresaId, fechaPago])
+  @@index([proveedorId])
+  @@index([periodoFiscalId])
+  @@index([conceptoISLRId])
+}
+
+model PagoCompra {
+  id            String   @id @default(uuid())
+  pagoId        String
+  compraId      String
+  montoAplicado Decimal  @db.Decimal(18, 2)
+  createdAt     DateTime @default(now())
+  compra        Compra   @relation(fields: [compraId], references: [id])
+  pago          Pago     @relation(fields: [pagoId], references: [id], onDelete: Cascade)
+
+  @@unique([pagoId, compraId])
+  @@index([compraId])
+}
+
+model RetencionIVA {
+  id                          String                      @id @default(uuid())
+  tenantId                    String
+  compraId                    String                      @unique
+  comprobanteIVAId            String?
+  periodoFiscalId             String
+  estado                      EstadoRetencion             @default(CALCULADA)
+  porcentajeRetencionSnapshot Decimal                     @db.Decimal(5, 2)
+  montoBaseSnapshot           Decimal                     @db.Decimal(18, 2)
+  impuestoIVASnapshot         Decimal                     @db.Decimal(18, 2)
+  montoRetenido               Decimal                     @db.Decimal(18, 2)
+  createdAt                   DateTime                    @default(now())
+  updatedAt                   DateTime                    @updatedAt
+  aplicaRetencion             Boolean?
+  baseLegalArticulo           String?
+  baseLegalDescripcion        String?
+  baseLegalNorma              String?
+  categoriaRegla              CategoriaReglaRetencionIVA?
+  montoOperacionUTSnapshot    Decimal?                    @db.Decimal(18, 4)
+  motivoCodigo                String?
+  motivoDescripcion           String?
+  valorUTSnapshot             Decimal?                    @db.Decimal(18, 2)
+  versionMotor                String?
+  compra                      Compra                      @relation(fields: [compraId], references: [id])
+  comprobanteIVA              ComprobanteIVA?             @relation(fields: [comprobanteIVAId], references: [id])
+  periodoFiscal               PeriodoFiscal               @relation(fields: [periodoFiscalId], references: [id])
+
+  @@index([tenantId])
+  @@index([comprobanteIVAId])
+  @@index([periodoFiscalId])
+}
+
+model ComprobanteIVA {
+  id                String         @id @default(uuid())
+  tenantId          String
+  empresaId         String
+  proveedorId       String
+  numeroComprobante String
+  fechaEmision      DateTime
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  empresa           Empresa        @relation(fields: [empresaId], references: [id])
+  proveedor         Proveedor      @relation(fields: [proveedorId], references: [id])
+  retencionesIVA    RetencionIVA[]
+
+  @@unique([empresaId, numeroComprobante])
+  @@index([tenantId])
+  @@index([proveedorId])
+  @@index([fechaEmision])
+}
+
+model RetencionISLR {
+  id                          String           @id @default(uuid())
+  tenantId                    String
+  pagoId                      String
+  comprobanteISLRId           String?
+  periodoFiscalId             String
+  estado                      EstadoRetencion  @default(CALCULADA)
+  valorUTSnapshot             Decimal          @db.Decimal(18, 2)
+  baseCalculoSnapshot         Decimal          @db.Decimal(18, 2)
+  codigoConceptoSnapshot      String
+  descripcionConceptoSnapshot String
+  porcentajeBaseSnapshot      Decimal          @db.Decimal(8, 4)
+  tarifaAplicadaSnapshot      Decimal          @db.Decimal(8, 4)
+  sustraendoSnapshot          Decimal          @db.Decimal(18, 2)
+  montoRetenido               Decimal          @db.Decimal(18, 2)
+  tipoEventoRetencionSnapshot String?
+  sujetoSnapshot              String?
+  motivoCodigo                String?
+  motivoDescripcion           String?
+  categoriaRegla              String?
+  baseLegalNorma              String?
+  baseLegalArticulo           String?
+  baseLegalDescripcion        String?
+  versionMotor                String?
+  createdAt                   DateTime         @default(now())
+  updatedAt                   DateTime         @updatedAt
+  comprobanteISLR             ComprobanteISLR? @relation(fields: [comprobanteISLRId], references: [id])
+  pago                        Pago             @relation(fields: [pagoId], references: [id])
+  periodoFiscal               PeriodoFiscal    @relation(fields: [periodoFiscalId], references: [id])
+
+  @@index([tenantId])
+  @@index([pagoId])
+  @@index([comprobanteISLRId])
+  @@index([periodoFiscalId])
+}
+
+model ComprobanteISLR {
+  id                String          @id @default(uuid())
+  tenantId          String
+  empresaId         String
+  proveedorId       String
+  periodoFiscalId   String
+  numeroComprobante String
+  fechaEmision      DateTime
+  montoTotalRetenido Decimal         @db.Decimal(18, 2)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  empresa           Empresa         @relation(fields: [empresaId], references: [id])
+  proveedor         Proveedor       @relation(fields: [proveedorId], references: [id])
+  periodoFiscal     PeriodoFiscal   @relation(fields: [periodoFiscalId], references: [id])
+  retencionesISLR   RetencionISLR[]
+
+  @@unique([empresaId, numeroComprobante])
+  @@index([tenantId])
+  @@index([proveedorId])
+  @@index([periodoFiscalId])
+  @@index([fechaEmision])
+}
+
+model ExportacionFiscal {
+  id                String                  @id @default(uuid())
+  tenantId          String
+  empresaId         String
+  periodoFiscalId   String
+  tipo              TipoExportacionFiscal
+  estado            EstadoExportacionFiscal @default(GENERADA)
+  urlStorage        String?
+  hashArchivo       String?
+  usuarioId         String
+  fechaGeneracion   DateTime                @default(now())
+  cantidadRegistros Int                     @default(0)
+  montoTotal        Decimal                 @db.Decimal(18, 2)
+  nombreArchivo     String?
+  metadata          Json?
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  empresa           Empresa                 @relation(fields: [empresaId], references: [id])
+  periodoFiscal     PeriodoFiscal           @relation(fields: [periodoFiscalId], references: [id])
+  usuario           Usuario                 @relation(fields: [usuarioId], references: [id])
+
+  @@index([tenantId])
+  @@index([empresaId, periodoFiscalId])
+  @@index([tipo, estado])
+}
+
+model LogAuditoria {
+  id            String              @id @default(uuid())
+  tenantId      String
+  usuarioId     String
+  accion        TipoAccionAuditoria
+  entidadNombre String
+  entidadId     String
+  datosPrevios  Json?
+  datosNuevos   Json?
+  ip            String?
+  userAgent     String?
+  timestamp     DateTime            @default(now())
+  usuario       Usuario             @relation(fields: [usuarioId], references: [id])
+
+  @@index([tenantId])
+  @@index([usuarioId, timestamp])
+  @@index([entidadNombre, entidadId])
+}
+
+enum PlanMembresia {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum TipoPersona {
+  NATURAL
+  JURIDICA
+}
+
+enum TipoResidencia {
+  RESIDENTE
+  NO_RESIDENTE
+  DOMICILIADO
+  NO_DOMICILIADO
+}
+
+enum TipoContribuyente {
+  ORDINARIO
+  ESPECIAL
+  FORMAL
+}
+
+enum EstadoPeriodoFiscal {
+  ABIERTO
+  CERRADO
+}
+
+enum FrecuenciaPeriodo {
+  MENSUAL
+  QUINCENAL
+}
+
+enum TipoImpuesto {
+  IVA
+  ISLR
+}
+
+enum EstadoCompra {
+  REGISTRADA
+  ANULADA
+}
+
+enum EstadoPago {
+  PROCESADO
+  ANULADO
+}
+
+enum EstadoRetencion {
+  CALCULADA
+  CONFIRMADA
+  ANULADA
+}
+
+enum TipoEventoRetencion {
+  PAGO_EFECTIVO
+  ABONO_EN_CUENTA
+}
+
+enum TipoExportacionFiscal {
+  TXT_IVA
+  ISLR_TXT
+  ISLR_CSV
+  XML_ISLR
+}
+
+enum EstadoExportacionFiscal {
+  GENERADA
+  ENVIADA
+  ANULADA
+}
+
+enum TipoAjuste {
+  ANULACION
+  DESCUENTO
+  DEVOLUCION
+  ERROR_PRECIO
+}
+
+enum NaturalezaIVA {
+  GRAVADA
+  EXENTA
+  EXONERADA
+  NO_SUJETA
+}
+
+enum CategoriaReglaRetencionIVA {
+  EXCLUSION_ABSOLUTA
+  EXCLUSION_CONDICIONAL
+  RETENCION_TOTAL
+  RETENCION_GENERAL
+}
+
+enum TipoAccionAuditoria {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  GENERATE
+  CLOSE_PERIOD
+}

@@ -1,0 +1,349 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/app/_not-found/page-be756ac257d1861e.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/css/e95ecb898cd599db.css",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/998-002b09e1699ffd43.js",
+      "static/chunks/app/layout-c118e5e5af3d1595.js"
+    ],
+    "/(auth)/logout/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/998-002b09e1699ffd43.js",
+      "static/chunks/app/(auth)/logout/page-bf6f3ff140219a59.js"
+    ],
+    "/retenciones/islr/comprobantes/[id]/print/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/3742-64caa11ddaf5dd82.js",
+      "static/chunks/8059-76c9e404ffd8dc87.js",
+      "static/chunks/app/retenciones/islr/comprobantes/[id]/print/page-db29dc5c58c10fc4.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/app/page-329cac2ff90e651e.js"
+    ],
+    "/retenciones/iva/comprobantes/[id]/print/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/3742-64caa11ddaf5dd82.js",
+      "static/chunks/8059-76c9e404ffd8dc87.js",
+      "static/chunks/app/retenciones/iva/comprobantes/[id]/print/page-0fffe46d5644bcff.js"
+    ],
+    "/(auth)/login/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/998-002b09e1699ffd43.js",
+      "static/chunks/app/(auth)/login/page-42e0c38b93c48c16.js"
+    ],
+    "/(app)/compras/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/app/(app)/compras/[id]/page-cdfecbe39bbf22fa.js"
+    ],
+    "/(app)/layout": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/998-002b09e1699ffd43.js",
+      "static/chunks/app/(app)/layout-f5f7186ee8e33491.js"
+    ],
+    "/(app)/empresas/nueva/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/app/(app)/empresas/nueva/page-9845623518d0da74.js"
+    ],
+    "/(app)/empresas/[id]/editar/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/app/(app)/empresas/[id]/editar/page-12ea2c9387956186.js"
+    ],
+    "/(app)/dashboard/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/dashboard/page-16bdc14b202616a5.js"
+    ],
+    "/(app)/empresas/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/empresas/[id]/page-32898f4101e50c7c.js"
+    ],
+    "/(app)/empresas/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/empresas/page-efd55cad567fcceb.js"
+    ],
+    "/(app)/exportaciones/iva/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/3742-64caa11ddaf5dd82.js",
+      "static/chunks/1977-76d54508a2bda960.js",
+      "static/chunks/app/(app)/exportaciones/iva/page-9440d620515a7493.js"
+    ],
+    "/(app)/fiscal/pagos/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/fiscal/pagos/page-5e7aaecee8a3cbf3.js"
+    ],
+    "/(app)/fiscal/pagos/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/app/(app)/fiscal/pagos/[id]/page-fa414a44e74289d4.js"
+    ],
+    "/(app)/fiscal/periodos/nuevo/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/app/(app)/fiscal/periodos/nuevo/page-e63509d06660c231.js"
+    ],
+    "/(app)/fiscal/periodos/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/app/(app)/fiscal/periodos/[id]/page-95a026f6b4854077.js"
+    ],
+    "/(app)/proveedores/[id]/editar/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/2086-5463b41b3cfa4444.js",
+      "static/chunks/app/(app)/proveedores/[id]/editar/page-c8315d631f91f432.js"
+    ],
+    "/(app)/pagos/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/app/(app)/pagos/page-c06126bb4edab229.js"
+    ],
+    "/(app)/fiscal/periodos/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/fiscal/periodos/page-1c20af23c19d355a.js"
+    ],
+    "/(app)/proveedores/nuevo/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/2086-5463b41b3cfa4444.js",
+      "static/chunks/app/(app)/proveedores/nuevo/page-71e806d345ab07bb.js"
+    ],
+    "/(app)/proveedores/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/proveedores/[id]/page-224d961b9addc5f1.js"
+    ],
+    "/(app)/retenciones/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/app/(app)/retenciones/page-0433e6fd388ea888.js"
+    ],
+    "/(app)/proveedores/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/proveedores/page-acdf712e57a33918.js"
+    ],
+    "/(app)/compras/nueva/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/520-32577799f5bd1134.js",
+      "static/chunks/app/(app)/compras/nueva/page-06ec25016f832598.js"
+    ],
+    "/(app)/fiscal/comprobantes-islr/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/app/(app)/fiscal/comprobantes-islr/[id]/page-29f1b7025974f677.js"
+    ],
+    "/(app)/fiscal/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/fiscal/page-b6b2a3f86e5ea941.js"
+    ],
+    "/(app)/fiscal/declaraciones-islr/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/3742-64caa11ddaf5dd82.js",
+      "static/chunks/1977-76d54508a2bda960.js",
+      "static/chunks/app/(app)/fiscal/declaraciones-islr/page-cb3e5cb2d1cf85d6.js"
+    ],
+    "/(app)/fiscal/comprobantes-iva/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/app/(app)/fiscal/comprobantes-iva/page-59887eb0a2fac99e.js"
+    ],
+    "/(app)/fiscal/retenciones-iva/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/fiscal/retenciones-iva/page-0c80946764c75174.js"
+    ],
+    "/(app)/compras/[id]/editar/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/520-32577799f5bd1134.js",
+      "static/chunks/app/(app)/compras/[id]/editar/page-69d2eac52b57ddb8.js"
+    ],
+    "/(app)/compras/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/app/(app)/compras/page-a6be8f21d41bb64d.js"
+    ],
+    "/(app)/fiscal/comprobantes-islr/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/app/(app)/fiscal/comprobantes-islr/page-c99be028f931ec23.js"
+    ],
+    "/(app)/fiscal/comprobantes-iva/[id]/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/app/(app)/fiscal/comprobantes-iva/[id]/page-fa6fc78c765a7f52.js"
+    ],
+    "/(app)/fiscal/comprobantes-iva/emitir/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/app/(app)/fiscal/comprobantes-iva/emitir/page-9433a9b76a0bce45.js"
+    ],
+    "/(app)/fiscal/pagos/nuevo/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/231-9868819c31224b31.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/app/(app)/fiscal/pagos/nuevo/page-905baf4666c3efc2.js"
+    ],
+    "/(app)/admin/catalogos/islr/page": [
+      "static/chunks/webpack-4b15324a9dc0f0f7.js",
+      "static/chunks/fd9d1056-d386a4c36748dfd1.js",
+      "static/chunks/7023-93cd14ea440f0bcb.js",
+      "static/chunks/main-app-2984237bd1e08be8.js",
+      "static/chunks/7776-4345e3a7013d247c.js",
+      "static/chunks/4868-0f273c33160fd935.js",
+      "static/chunks/6455-47d7efefaf8f0e74.js",
+      "static/chunks/app/(app)/admin/catalogos/islr/page-8ec30dfd32fe8bbb.js"
+    ]
+  }
+}
