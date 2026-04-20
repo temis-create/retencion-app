@@ -67,10 +67,11 @@ export async function createEmpresa(data: EmpresaFormValues, tenantId: string) {
         telefono: data.telefono,
         agenteRetencionIVA: data.agenteRetencionIVA,
         agenteRetencionISLR: data.agenteRetencionISLR,
+        logoUrl: data.logoUrl,
         parametrosFiscales: {
           create: {
-            proximoCorrelativoIVA: 1,
-            proximoCorrelativoISLR: 1,
+            proximoCorrelativoIVA: data.proximoCorrelativoIVA,
+            proximoCorrelativoISLR: data.proximoCorrelativoISLR,
             reinicioCorrelativoMensual: true,
           },
         },
@@ -107,6 +108,13 @@ export async function updateEmpresa(id: string, data: EmpresaFormValues, tenantI
       telefono: data.telefono,
       agenteRetencionIVA: data.agenteRetencionIVA,
       agenteRetencionISLR: data.agenteRetencionISLR,
+      logoUrl: data.logoUrl,
+      parametrosFiscales: {
+        update: {
+          proximoCorrelativoIVA: data.proximoCorrelativoIVA,
+          proximoCorrelativoISLR: data.proximoCorrelativoISLR,
+        }
+      }
     },
   });
 }

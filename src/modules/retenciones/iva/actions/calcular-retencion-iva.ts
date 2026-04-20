@@ -13,7 +13,19 @@ export async function calcularRetencionIVAAction(compraId: string) {
     revalidatePath("/compras");
     revalidatePath(`/compras/${compraId}`);
 
-    return { success: true, ...result };
+    // Sanitización para Client Components
+    const sanitizedResult = {
+      ...result,
+      retencion: result.retencion ? {
+        ...result.retencion,
+        porcentajeRetencionSnapshot: Number(result.retencion.porcentajeRetencionSnapshot),
+        montoBaseSnapshot: Number(result.retencion.montoBaseSnapshot),
+        impuestoIVASnapshot: Number(result.retencion.impuestoIVASnapshot),
+        montoRetenido: Number(result.retencion.montoRetenido),
+      } : undefined
+    };
+
+    return { success: true, ...sanitizedResult };
   } catch (error: any) {
     return { success: false, error: error.message || "Error al calcular retención IVA." };
   }

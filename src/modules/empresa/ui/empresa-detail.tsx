@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowLeft, Building2, Edit2, Calendar, FileText } from "lucide-react";
+import { EmpresaLogoUploader } from "./empresa-logo-uploader";
 
 type EmpresaWithParams = {
   id: string;
   nombreFiscal: string;
   rif: string;
+  logoUrl?: string | null;
   direccion?: string | null;
   telefono?: string | null;
   agenteRetencionIVA: boolean;
@@ -118,6 +120,11 @@ export function EmpresaDetail({ empresa }: { empresa: EmpresaWithParams }) {
               </li>
             </ul>
           </section>
+
+          <EmpresaLogoUploader 
+            empresaId={empresa.id} 
+            currentLogoUrl={empresa.logoUrl} 
+          />
 
           <section className="bg-white rounded-xl border border-zinc-200 p-6 shadow-sm">
              <h2 className="text-lg font-semibold text-zinc-900 mb-4 flex items-center gap-2">

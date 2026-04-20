@@ -119,11 +119,20 @@ export function ComprobanteIVAPdfTemplate({ data }: Props) {
       <div className="voucher-container">
         {/* Encabezado */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-          <div>
-            <h1 className="title">Comprobante de Retención de IVA</h1>
-            <p className="header-legal">
-              Ley del IVA - Art. 11 / Providencia Administrativa SNAT/2015/0049
-            </p>
+          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+            {empresa.logoUrl && (
+              <img 
+                src={empresa.logoUrl} 
+                style={{ width: '50px', height: '50px', objectFit: 'contain' }} 
+                alt="Logo Empresa" 
+              />
+            )}
+            <div>
+              <h1 className="title">Comprobante de Retención de IVA</h1>
+              <p className="header-legal">
+                Ley del IVA - Art. 11 / Providencia Administrativa SNAT/2015/0049
+              </p>
+            </div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div className="badge">

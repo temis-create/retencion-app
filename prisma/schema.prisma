@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -119,6 +118,7 @@ model Empresa {
   tenantId              String
   nombreFiscal          String
   rif                   String
+  logoUrl               String?
   direccion             String?
   telefono              String?
   agenteRetencionIVA    Boolean                @default(false)
@@ -205,15 +205,16 @@ model PeriodoFiscal {
 }
 
 model UnidadTributaria {
-  id         String    @id @default(uuid())
-  valor      Decimal   @db.Decimal(18, 2)
-  fechaDesde DateTime
-  fechaHasta DateTime?
-  gaceta     String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id          String    @id @default(uuid())
+  valor       Decimal   @db.Decimal(18, 2)
+  fechaInicio DateTime?
+  fechaFin    DateTime?
+  descripcion String?
+  activo      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  @@index([fechaDesde, fechaHasta])
+  @@index([fechaInicio, fechaFin])
 }
 
 model AlicuotaIVA {

@@ -10,6 +10,7 @@ interface Empresa {
   id: string;
   nombreFiscal: string;
   rif: string;
+  logoUrl?: string | null;
 }
 
 interface Props {
@@ -42,7 +43,11 @@ export function EmpresaSelector({ empresas, empresaActivaId }: Props) {
   if (empresas.length === 1) {
     return (
       <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-600">
-        <Building2 className="h-4 w-4 text-zinc-400" />
+        {empresas[0].logoUrl ? (
+          <img src={empresas[0].logoUrl} className="h-6 w-6 object-contain" alt="Logo" />
+        ) : (
+          <Building2 className="h-4 w-4 text-zinc-400" />
+        )}
         <div className="flex flex-col">
           <span className="text-[9px] font-bold uppercase text-zinc-400 leading-none">Empresa</span>
           <span className="text-xs font-semibold truncate max-w-[150px]">
@@ -59,7 +64,11 @@ export function EmpresaSelector({ empresas, empresaActivaId }: Props) {
         "flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-700 hover:border-indigo-300 transition-all shadow-sm focus-within:ring-2 focus-within:ring-indigo-500/10",
         isPending && "opacity-50 cursor-wait"
       )}>
-        <Building2 className="h-4 w-4 text-indigo-500" />
+        {empresaActiva.logoUrl ? (
+          <img src={empresaActiva.logoUrl} className="h-6 w-6 object-contain" alt="Logo" />
+        ) : (
+          <Building2 className="h-4 w-4 text-indigo-500" />
+        )}
         <div className="flex flex-col">
            <span className="text-[9px] font-bold uppercase text-zinc-400 leading-none">Empresa Activa</span>
            <select

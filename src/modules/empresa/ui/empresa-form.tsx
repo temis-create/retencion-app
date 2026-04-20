@@ -141,6 +141,33 @@ export function EmpresaForm({ initialData }: EmpresaFormProps) {
         </div>
       </div>
 
+      <div className="border-t border-zinc-200 pt-6 space-y-4">
+        <h4 className="text-sm font-medium text-zinc-900">Control de Correlativos</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="proximoCorrelativoIVA" className="text-xs font-bold text-zinc-500 uppercase">Próx. Correlativo IVA</label>
+            <input
+              id="proximoCorrelativoIVA"
+              type="number"
+              className="border border-zinc-300 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+              {...register("proximoCorrelativoIVA", { valueAsNumber: true })}
+            />
+            {errors.proximoCorrelativoIVA && <span className="text-xs text-red-500">{errors.proximoCorrelativoIVA.message}</span>}
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="proximoCorrelativoISLR" className="text-xs font-bold text-zinc-500 uppercase">Próx. Correlativo ISLR</label>
+            <input
+              id="proximoCorrelativoISLR"
+              type="number"
+              className="border border-zinc-300 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+              {...register("proximoCorrelativoISLR", { valueAsNumber: true })}
+            />
+            {errors.proximoCorrelativoISLR && <span className="text-xs text-red-500">{errors.proximoCorrelativoISLR.message}</span>}
+          </div>
+        </div>
+        <p className="text-xs text-zinc-400 font-medium">Si la empresa ya tiene comprobantes emitidos fuera del sistema, indique aquí el siguiente número correlativo a emitir.</p>
+      </div>
+
       <div className="flex items-center justify-end gap-3 pt-6 border-t border-zinc-200">
         <button
           type="button"

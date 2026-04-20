@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { ISLRRetencionEngine } from "../engine/islr-retencion.engine";
 import { resolverSujetoISLR } from "../engine/islr-retencion.subject";
 import { Prisma } from "@prisma/client";
+import { UnidadTributariaService } from "@/modules/admin-saas/unidad-tributaria/server/ut.service";
 
 export class ISLREngineService {
   /**
@@ -19,9 +20,10 @@ export class ISLREngineService {
 
     if (!pago) throw new Error("Pago no encontrado");
 
-    // 1. Obtener UT vigente
-    // TODO: Implementar tabla de UT real. Por ahora usamos el valor 2025 del catálogo.
-    const valorUT = 43.00; 
+    // 1. Obtener UT vigente según fecha del pago
+    const utService = new UnidadTributariaService();
+    const ut = await utService.getUTByFecha(new Date(pago.fechaPago));
+    const valorUT = ut ? Number(ut.valor) : 43.00; 
 
     // 2. Resolver Sujeto
     const sujeto = resolverSujetoISLR({

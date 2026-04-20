@@ -11,8 +11,10 @@ import {
   Settings, 
   LayoutDashboard,
   ShieldCheck,
-  Package
+  Package,
+  Calculator
 } from "lucide-react";
+import { LogoutButton } from "@/modules/auth/ui/logout-button";
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -27,6 +29,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     { name: "Organizaciones", href: "/dashboard-admin/organizaciones", icon: Building2 },
     { name: "Usuarios", href: "/dashboard-admin/usuarios", icon: Users },
     { name: "Planes", href: "/dashboard-admin/planes", icon: Package },
+    { name: "Unidad Tributaria", href: "/dashboard-admin/unidad-tributaria", icon: Calculator },
   ];
 
   return (
@@ -53,10 +56,14 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           ))}
         </nav>
 
-        <div className="mt-20 px-4">
-          <Link href="/dashboard" className="text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-emerald-600">
-            &larr; Volver a la App
+        <div className="mt-20 px-4 space-y-4">
+          <Link href="/dashboard" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-emerald-600 transition-colors">
+            <span>&larr;</span>
+            Volver a la App
           </Link>
+          <div className="border-t border-slate-100 pt-4">
+            <LogoutButton />
+          </div>
         </div>
       </aside>
 

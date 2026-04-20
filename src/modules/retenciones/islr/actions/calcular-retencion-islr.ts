@@ -18,12 +18,20 @@ export async function calcularRetencionISLRAction(pagoId: string) {
     revalidatePath(`/fiscal/pagos/${pagoId}`);
     revalidatePath("/retenciones/islr");
     
-    // Devolver estructura compatible con la UI
+    // Devolver estructura compatible con la UI (Sanitizada)
     return { 
       success: true, 
       aplica: result.montoRetenido.toNumber() > 0, 
       motivo: (result as any).motivoDescripcion || "Procesado",
-      data: result 
+      data: {
+        ...result,
+        valorUTSnapshot: Number(result.valorUTSnapshot),
+        baseCalculoSnapshot: Number(result.baseCalculoSnapshot),
+        porcentajeBaseSnapshot: Number(result.porcentajeBaseSnapshot),
+        tarifaAplicadaSnapshot: Number(result.tarifaAplicadaSnapshot),
+        sustraendoSnapshot: Number(result.sustraendoSnapshot),
+        montoRetenido: Number(result.montoRetenido),
+      }
     };
   } catch (error: any) {
     console.error("Error al calcular retención ISLR (Motor):", error);

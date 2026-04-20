@@ -16,33 +16,36 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email y contraseña requeridos.");
         }
 
+        const email = credentials.email.trim().toLowerCase();
+        
         const users = await prisma.usuario.findMany({
-          where: { email: credentials.email },
+          where: { email },
         });
 
         if (users.length === 0) {
           throw new Error("Usuario no encontrado.");
         }
 
-        if (users.length > 1) {
-          throw new Error(
-            "Este usuario pertenece a múltiples organizaciones. Selección de organización no implementada aún."
+        // Si hay varios usuarios con el mismo email (multi-tenant),
+        // buscamos el que coincida con la contraseña proporcionada.
+        let user = null;
+        for (const u of users) {
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password,
+            u.passwordHash
           );
+          if (isPasswordValid) {
+            user = u;
+            break;
+          }
         }
 
-        const user = users[0];
+        if (!user) {
+          throw new Error("Contraseña incorrecta.");
+        }
 
         if (!user.activo) {
           throw new Error("Usuario inactivo.");
-        }
-
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.passwordHash
-        );
-
-        if (!isPasswordValid) {
-          throw new Error("Contraseña incorrecta.");
         }
 
         // Buscar la primera empresa del tenant para ponerla por defecto

@@ -25,7 +25,7 @@ interface Props {
 export function ExportacionISLRForm({ empresas, periodos }: Props) {
   const [empresaId, setEmpresaId] = useState("");
   const [periodoId, setPeriodoId] = useState("");
-  const [formato, setFormato] = useState<"TXT" | "CSV">("TXT");
+  const [formato, setFormato] = useState<"TXT" | "CSV" | "XML">("XML");
   const [loading, setLoading] = useState(false);
 
   // Filtrar períodos por empresa seleccionada
@@ -51,7 +51,8 @@ export function ExportacionISLRForm({ empresas, periodos }: Props) {
         toast.success(res.data.resumen);
         
         // Descargar archivo
-        const blob = new Blob([res.data.contenido], { type: "text/plain;charset=utf-8" });
+        const mimeType = formato === "XML" ? "application/xml" : "text/plain";
+        const blob = new Blob([res.data.contenido], { type: `${mimeType};charset=utf-8` });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -112,7 +113,26 @@ export function ExportacionISLRForm({ empresas, periodos }: Props) {
         {/* Formato */}
         <div className="space-y-3 pt-4 border-t border-zinc-100">
           <label className="text-sm font-bold text-zinc-700 uppercase tracking-tighter">Formato de Salida</label>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button
+                onClick={() => setFormato("XML")}
+                className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all ${
+                  formato === "XML" 
+                  ? "border-amber-600 bg-amber-50/50 text-amber-700 shadow-sm" 
+                  : "border-zinc-100 hover:border-zinc-200 text-zinc-500"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`p-2 rounded-lg ${formato === "XML" ? "bg-amber-600 text-white" : "bg-zinc-100 text-zinc-400"}`}>
+                    <Download className="h-5 w-5" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold uppercase text-[12px]">XML SENIAT</div>
+                    <div className="text-[10px] opacity-70 italic">Formato Oficial</div>
+                  </div>
+                </div>
+            </button>
+
             <button
               onClick={() => setFormato("TXT")}
               className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all ${
@@ -126,7 +146,7 @@ export function ExportacionISLRForm({ empresas, periodos }: Props) {
                   <FileText className="h-5 w-5" />
                 </div>
                 <div className="text-left">
-                  <div className="font-bold">Texto Plano (TXT)</div>
+                  <div className="font-bold uppercase text-[12px]">Texto Plano</div>
                   <div className="text-[10px] opacity-70">Delimitado por TAB</div>
                 </div>
               </div>
@@ -145,8 +165,8 @@ export function ExportacionISLRForm({ empresas, periodos }: Props) {
                   <FileSpreadsheet className="h-5 w-5" />
                 </div>
                 <div className="text-left">
-                  <div className="font-bold">Valores Separados (CSV)</div>
-                  <div className="text-[10px] opacity-70">Compatible con Excel</div>
+                  <div className="font-bold uppercase text-[12px]">Excel (CSV)</div>
+                  <div className="text-[10px] opacity-70">Formatos Variables</div>
                 </div>
               </div>
             </button>

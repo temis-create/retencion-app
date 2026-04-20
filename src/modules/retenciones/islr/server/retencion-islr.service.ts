@@ -26,6 +26,11 @@ export async function getRetencionISLRByPago(pagoId: string) {
     tarifaAplicadaSnapshot: Number(retencion.tarifaAplicadaSnapshot),
     sustraendoSnapshot: Number(retencion.sustraendoSnapshot),
     montoRetenido: Number(retencion.montoRetenido),
+    // Sanitizar relación anidada si existe
+    comprobanteISLR: retencion.comprobanteISLR ? {
+      ...retencion.comprobanteISLR,
+      montoTotalRetenido: Number(retencion.comprobanteISLR.montoTotalRetenido)
+    } : null,
   };
 }
 

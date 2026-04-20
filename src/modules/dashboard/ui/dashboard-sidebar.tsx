@@ -48,6 +48,7 @@ const navigation = [
       { name: "Pagos y Cálculos", href: "/fiscal/pagos" },
       { name: "Comprobantes", href: "/fiscal/comprobantes-islr" },
       { name: "Exportar Archivo", href: "/fiscal/declaraciones-islr" },
+      { name: "Catálogo de Conceptos", href: "/retenciones/islr/catalogo" },
     ]
   },
   
@@ -57,7 +58,7 @@ const navigation = [
 
 export function DashboardSidebar({ user }: { user: any }) {
   const pathname = usePathname();
-  const [openItems, setOpenItems] = useState<string[]>(["IVA"]);
+  const [openItems, setOpenItems] = useState<string[]>(["IVA", "ISLR"]);
 
   const toggleItem = (name: string) => {
     setOpenItems(prev => 
@@ -100,13 +101,13 @@ export function DashboardSidebar({ user }: { user: any }) {
                     onClick={() => toggleItem(item.name)}
                     className={cn(
                       "w-full group flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                      isActive ? "bg-indigo-50 text-indigo-700" : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                      isActive ? "bg-emerald-50 text-emerald-700" : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
                     )}
                   >
                     <div className="flex items-center">
                       {(() => {
                         const Icon = (item as any).icon;
-                        return Icon ? <Icon className={cn("mr-3 h-5 w-5 flex-shrink-0", isActive ? "text-indigo-500" : "text-zinc-400")} /> : null;
+                        return Icon ? <Icon className={cn("mr-3 h-5 w-5 flex-shrink-0", isActive ? "text-emerald-500" : "text-zinc-400")} /> : null;
                       })()}
                       {item.name}
                     </div>
@@ -120,7 +121,7 @@ export function DashboardSidebar({ user }: { user: any }) {
                           href={child.href}
                           className={cn(
                             "block rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
-                            pathname === child.href ? "text-indigo-700 bg-indigo-50/50" : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                            pathname === child.href ? "text-emerald-700 bg-emerald-50/50" : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
                           )}
                         >
                           {child.name}
@@ -152,12 +153,12 @@ export function DashboardSidebar({ user }: { user: any }) {
                     href={item.href!}
                     className={cn(
                       "group flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                      isActive ? "bg-indigo-50 text-indigo-700" : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                      isActive ? "bg-emerald-50 text-emerald-700" : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
                     )}
                   >
                     {(() => {
                       const Icon = (item as any).icon;
-                      return Icon ? <Icon className={cn("mr-3 h-5 w-5 flex-shrink-0", isActive ? "text-indigo-500" : "text-zinc-400 group-hover:text-zinc-600")} /> : null;
+                      return Icon ? <Icon className={cn("mr-3 h-5 w-5 flex-shrink-0", isActive ? "text-emerald-500" : "text-zinc-400 group-hover:text-zinc-600")} /> : null;
                     })()}
                     {item.name}
                   </Link>

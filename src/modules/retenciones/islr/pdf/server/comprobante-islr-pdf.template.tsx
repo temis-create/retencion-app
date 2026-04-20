@@ -117,11 +117,20 @@ export function ComprobanteISLRPdfTemplate({ data }: Props) {
       <div className="voucher-container">
         {/* Encabezado */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-          <div style={{ width: '65%' }}>
-            <h1 className="title">Comprobante de Retención de ISLR</h1>
-            <p className="header-legal" style={{ fontStyle: 'italic', marginTop: '4px' }}>
-              Decreto N° 1.808 - Reglamento sobre Retenciones de ISLR / Gaceta Oficial N° 36.203
-            </p>
+          <div style={{ width: '65%', display: 'flex', gap: '15px', alignItems: 'center' }}>
+            {empresa.logoUrl && (
+              <img 
+                src={empresa.logoUrl} 
+                style={{ width: '50px', height: '50px', objectFit: 'contain' }} 
+                alt="Logo Empresa" 
+              />
+            )}
+            <div>
+              <h1 className="title">Comprobante de Retención de ISLR</h1>
+              <p className="header-legal" style={{ fontStyle: 'italic', marginTop: '4px' }}>
+                Decreto N° 1.808 - Reglamento sobre Retenciones de ISLR / Gaceta Oficial N° 36.203
+              </p>
+            </div>
           </div>
           <div style={{ textAlign: 'right', width: '35%' }}>
             <div className="badge">

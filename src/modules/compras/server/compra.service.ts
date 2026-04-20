@@ -184,13 +184,13 @@ export async function createCompra(data: CompraFormValues, tenantId: string) {
   // 6. Resolver UT vigente para snapshot
   const ut = await prisma.unidadTributaria.findFirst({
     where: {
-      fechaDesde: { lte: fechaFactura },
+      fechaInicio: { lte: fechaFactura },
       OR: [
-        { fechaHasta: { gte: fechaFactura } },
-        { fechaHasta: null },
+        { fechaFin: { gte: fechaFactura } },
+        { fechaFin: null },
       ],
     },
-    orderBy: { fechaDesde: "desc" },
+    orderBy: { fechaInicio: "desc" },
   });
   const valorUT = ut ? ut.valor.toNumber() : null;
   const totalNum = Number(data.totalFactura);
@@ -327,13 +327,13 @@ export async function updateCompra(
   // 8. Resolver UT vigente para snapshot
   const ut = await prisma.unidadTributaria.findFirst({
     where: {
-      fechaDesde: { lte: fechaFactura },
+      fechaInicio: { lte: fechaFactura },
       OR: [
-        { fechaHasta: { gte: fechaFactura } },
-        { fechaHasta: null },
+        { fechaFin: { gte: fechaFactura } },
+        { fechaFin: null },
       ],
     },
-    orderBy: { fechaDesde: "desc" },
+    orderBy: { fechaInicio: "desc" },
   });
   const valorUT = ut ? ut.valor.toNumber() : null;
   const totalNum = Number(data.totalFactura);

@@ -4,7 +4,9 @@ import { AdminSaasRepository } from "./admin-saas.repository";
 import { 
   PlanForm, 
   AssignPlan, 
-  UpdateOrganizationStatus 
+  UpdateOrganizationStatus,
+  CreateOrganization,
+  UpdateUser
 } from "./admin-saas.schema";
 import { RolGlobal } from "@prisma/client";
 
@@ -58,6 +60,16 @@ export class AdminSaasService {
   async listPlans() {
     await this.ensureAdmin();
     return this.repository.listPlans();
+  }
+
+  async createOrganization(data: CreateOrganization) {
+    await this.ensureAdmin();
+    return this.repository.createOrganization(data);
+  }
+
+  async updateUser(data: UpdateUser) {
+    await this.ensureAdmin();
+    return this.repository.updateUser(data);
   }
 
   async upsertPlan(data: PlanForm) {

@@ -35,6 +35,8 @@ export default async function EditarEmpresaPage({ params }: { params: { id: stri
         telefono: empresa.telefono || "",
         agenteRetencionIVA: empresa.agenteRetencionIVA,
         agenteRetencionISLR: empresa.agenteRetencionISLR,
+        proximoCorrelativoIVA: empresa.parametrosFiscales?.proximoCorrelativoIVA || 1,
+        proximoCorrelativoISLR: empresa.parametrosFiscales?.proximoCorrelativoISLR || 1,
       }} />
     </div>
   );

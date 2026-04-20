@@ -21,7 +21,7 @@ export async function generarExportacionIVAAction(
       user.id
     );
 
-    revalidatePath("/exportaciones/iva");
+    revalidatePath("/fiscal/exportaciones-iva");
 
     return { 
       success: true, 

@@ -30,7 +30,7 @@ export async function generarExportacionISLR(params: {
   tenantId: string;
   empresaId: string;
   periodoFiscalId: string;
-  formato: "TXT" | "CSV";
+  formato: "TXT" | "CSV" | "XML";
   usuarioId: string;
 }) {
   const { tenantId, empresaId, periodoFiscalId, formato, usuarioId } = params;
@@ -62,7 +62,12 @@ export async function generarExportacionISLR(params: {
       pago: {
         include: {
           proveedor: true,
-          empresa: true
+          empresa: true,
+          pagoCompras: {
+            include: {
+              compra: true
+            }
+          }
         }
       },
       periodoFiscal: true
@@ -86,6 +91,12 @@ export async function generarExportacionISLR(params: {
     contenido = formatToCSV(lineas);
     nombreArchivo = `ISLR_${periodo.codigoPeriodo}_${empresaId.slice(0,4)}.csv`;
     tipoExport = TipoExportacionFiscal.ISLR_CSV;
+  } else if (formato === "XML") {
+    const { formatToXML } = await import("./exportacion-islr.mapper");
+    contenido = formatToXML(lineas);
+    const rifLimpio = lineas[0].rifAgente.replace(/[^A-Z0-9]/g, '');
+    nombreArchivo = `ISLR_${periodo.codigoPeriodo}_${rifLimpio}.xml`;
+    tipoExport = TipoExportacionFiscal.XML_ISLR;
   } else {
     contenido = formatToTXT(lineas);
     nombreArchivo = `ISLR_${periodo.codigoPeriodo}_${empresaId.slice(0,4)}.txt`;
@@ -106,7 +117,7 @@ export async function generarExportacionISLR(params: {
       metadata: {
         formato,
         registros: lineas.length,
-        version: "1.0"
+        version: "1.1" // Actualizado para incluir XML
       }
     }
   });

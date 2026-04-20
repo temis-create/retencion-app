@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 export async function generarExportacionISLRAction(formData: {
   empresaId: string;
   periodoFiscalId: string;
-  formato: "TXT" | "CSV";
+  formato: "TXT" | "CSV" | "XML";
 }) {
   try {
     const tenantId = await getTenantId();

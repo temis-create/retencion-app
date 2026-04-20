@@ -83,13 +83,13 @@ export async function calcularYGuardarRetencionIVA(
   // 3. Obtener valor de Unidad Tributaria vigente (si existe)
   const ut = await prisma.unidadTributaria.findFirst({
     where: {
-      fechaDesde: { lte: compra.fechaFactura },
+      fechaInicio: { lte: compra.fechaFactura },
       OR: [
-        { fechaHasta: { gte: compra.fechaFactura } },
-        { fechaHasta: null },
+        { fechaFin: { gte: compra.fechaFactura } },
+        { fechaFin: null },
       ],
     },
-    orderBy: { fechaDesde: "desc" },
+    orderBy: { fechaInicio: "desc" },
   });
 
   const valorUT = ut ? ut.valor.toNumber() : null;

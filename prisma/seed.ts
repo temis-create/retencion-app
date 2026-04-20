@@ -46,6 +46,34 @@ async function main() {
   // Seed Catálogo ISLR 2025 (desde archivo especializado)
   await seedConceptosISLR();
 
+  // Seed Unidad Tributaria (Historial y Vigente)
+  const uts = [
+    {
+      valor: 9.00,
+      fechaInicio: new Date("2024-05-01"), // Valor anterior referencial
+      fechaFin: new Date("2025-06-01"),
+      descripcion: "Providencia Administrativa SENIAT/2024/0001 (Referencial)",
+      activo: false
+    },
+    {
+      valor: 43.00,
+      fechaInicio: new Date("2025-06-02"),
+      fechaFin: null,
+      descripcion: "Gaceta Oficial N° 43.140 (Incremento 377.78%)",
+      activo: true
+    }
+  ];
+
+  for (const utData of uts) {
+    const existeUt = await prisma.unidadTributaria.findFirst({
+        where: { valor: utData.valor, fechaInicio: utData.fechaInicio }
+    });
+    if (!existeUt) {
+        await prisma.unidadTributaria.create({ data: utData });
+    }
+  }
+  console.log("Historial de Unidad Tributaria actualizado.");
+
   // 1. Seed Planes (SaaS)
   const planes = [
     { codigo: "BRONCE", nombre: "Plan Bronce (Demo)", limiteEmpresas: 1, precioReferencial: 0 },

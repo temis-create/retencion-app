@@ -1,6 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { EstadoOrganizacion, RolGlobal } from "@prisma/client";
-import { PlanForm, AssignPlan, UpdateOrganizationStatus } from "./admin-saas.schema";
+import { 
+  PlanForm, 
+  AssignPlan, 
+  UpdateOrganizationStatus,
+  CreateOrganization,
+  UpdateUser
+} from "./admin-saas.schema";
+import bcrypt from "bcryptjs";
 
 export class AdminSaasRepository {
   async getDashboardKPIs() {
@@ -139,5 +146,53 @@ export class AdminSaasRepository {
     if (count > 0) throw new Error("No se puede eliminar un plan en uso");
 
     return prisma.plan.delete({ where: { id } });
+  }
+
+  async createOrganization(data: CreateOrganization) {
+    const passwordHash = await bcrypt.hash(data.adminPassword, 10);
+
+    return prisma.$transaction(async (tx) => {
+      // 1. Crear Organización
+      const org = await tx.organizacion.create({
+        data: {
+          nombre: data.nombre,
+          rif: data.rif,
+          emailContacto: data.emailContacto,
+          estado: "ACTIVA",
+        }
+      });
+
+      // 2. Crear Usuario Administrador para el nuevo tenant
+      const user = await tx.usuario.create({
+        data: {
+          tenantId: org.id,
+          nombre: data.adminNombre,
+          email: data.adminEmail,
+          passwordHash: passwordHash,
+          rolGlobal: RolGlobal.USUARIO, // El rol de Admin se maneja por Membresia/AsignacionRol 
+          activo: true,
+        }
+      });
+
+      return { org, user };
+    });
+  }
+
+  async updateUser(data: UpdateUser) {
+    const updateData: any = {
+      nombre: data.nombre,
+      email: data.email,
+      activo: data.activo,
+      rolGlobal: data.rolGlobal,
+    };
+
+    if (data.password && data.password.trim().length >= 6) {
+      updateData.passwordHash = await bcrypt.hash(data.password, 10);
+    }
+
+    return prisma.usuario.update({
+      where: { id: data.id },
+      data: updateData,
+    });
   }
 }
