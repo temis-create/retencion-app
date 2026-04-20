@@ -13,6 +13,7 @@ export type AuthUser = {
   name: string;
   tenantId: string;
   empresaActivaId?: string | null;
+  rolGlobal: "SUPERADMIN" | "ADMIN_SAAS" | "USUARIO";
 };
 
 export async function getCurrentUser() {

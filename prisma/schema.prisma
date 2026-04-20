@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -8,21 +9,35 @@ datasource db {
 }
 
 model Organizacion {
-  id            String      @id @default(uuid())
-  nombre        String
-  rif           String      @unique
-  logoUrl       String?
-  emailContacto String?
-  telefono      String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  deletedAt     DateTime?
-  empresas      Empresa[]
-  membresias    Membresia[]
-  usuarios      Usuario[]
+  id              String             @id @default(uuid())
+  nombre          String
+  rif             String             @unique
+  logoUrl         String?
+  emailContacto   String?
+  telefono        String?
+  planId          String?
+  fechaInicioPlan DateTime?
+  fechaFinPlan    DateTime?
+  limiteEmpresas  Int?
+  activo          Boolean            @default(true)
+  estado          EstadoOrganizacion @default(ACTIVA)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  deletedAt       DateTime?
+  empresas        Empresa[]
+  membresias      Membresia[]
+  usuarios        Usuario[]
+  plan            Plan?              @relation(fields: [planId], references: [id])
 
   @@index([deletedAt])
 }
+
+enum EstadoOrganizacion {
+  ACTIVA
+  SUSPENDIDA
+  EN_VIGILANCIA
+}
+
 
 model Usuario {
   id              String              @id @default(uuid())
@@ -31,6 +46,7 @@ model Usuario {
   email           String
   passwordHash    String
   activo          Boolean             @default(true)
+  rolGlobal       RolGlobal           @default(USUARIO)
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   deletedAt       DateTime?
@@ -81,6 +97,22 @@ model Membresia {
 
   @@index([tenantId, activa])
 }
+
+model Plan {
+  id                String         @id @default(uuid())
+  nombre            String
+  codigo            String         @unique
+  descripcion       String?
+  precioReferencial Decimal        @db.Decimal(18, 2)
+  limiteEmpresas    Int
+  limiteUsuarios    Int?
+  modulosHabilitados Json?
+  activo            Boolean        @default(true)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  organizaciones     Organizacion[]
+}
+
 
 model Empresa {
   id                    String                 @id @default(uuid())
@@ -528,6 +560,13 @@ enum PlanMembresia {
   PRO
   ENTERPRISE
 }
+
+enum RolGlobal {
+  SUPERADMIN
+  ADMIN_SAAS
+  USUARIO
+}
+
 
 enum TipoPersona {
   NATURAL

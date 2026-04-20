@@ -46,16 +46,43 @@ async function main() {
   // Seed Catálogo ISLR 2025 (desde archivo especializado)
   await seedConceptosISLR();
 
+  // 1. Seed Planes (SaaS)
+  const planes = [
+    { codigo: "BRONCE", nombre: "Plan Bronce (Demo)", limiteEmpresas: 1, precioReferencial: 0 },
+    { codigo: "PLATA", nombre: "Plan Plata", limiteEmpresas: 5, precioReferencial: 49.99 },
+    { codigo: "ORO", nombre: "Plan Oro (Enterprise)", limiteEmpresas: 50, precioReferencial: 149.99 },
+  ];
+
+  for (const plan of planes) {
+    await prisma.plan.upsert({
+      where: { codigo: plan.codigo },
+      update: {
+        limiteEmpresas: plan.limiteEmpresas,
+        precioReferencial: plan.precioReferencial
+      },
+      create: plan,
+    });
+  }
+  console.log("Catálogo de Planes actualizado.");
+
+  const planBronce = await prisma.plan.findUnique({ where: { codigo: "BRONCE" } });
 
   // 1. Crear Organización (Tenant)
   const tenant = await prisma.organizacion.upsert({
     where: { rif: "J-00000000-0" },
-    update: {},
+    update: {
+        planId: planBronce?.id,
+        limiteEmpresas: planBronce?.limiteEmpresas,
+        fechaInicioPlan: new Date()
+    },
     create: {
       id: "737c865c-5287-47ef-939d-95a1157a9054",
       nombre: "RetenSaaS Demo",
       rif: "J-00000000-0",
       emailContacto: "contacto@retensaas.com",
+      planId: planBronce?.id,
+      limiteEmpresas: planBronce?.limiteEmpresas,
+      fechaInicioPlan: new Date()
     },
   });
 
@@ -95,7 +122,7 @@ async function main() {
   });
   console.log(`Parámetros Fiscales listos para: ${empresa.nombreFiscal}`);
 
-  // 3. Crear Rol Admin
+  // 3. Crear Rol Admin Aplicación
   const rolAdmin = await prisma.rol.upsert({
     where: { nombre: "ADMINISTRADOR" },
     update: {},
@@ -108,50 +135,63 @@ async function main() {
     },
   });
 
-  // 4. Crear Usuario Administrador
+  // 4. Crear Usuario Administrador (SUPERADMIN SaaS)
   const hashedPassword = await bcrypt.hash("admin", 10);
   const emailAdmin = "admin@retensaas.com";
   
-  let user = await prisma.usuario.findFirst({
-    where: { 
-      email: emailAdmin, 
-      tenantId: tenant.id 
-    }
-  });
-
-  if (!user) {
-    user = await prisma.usuario.create({
-      data: {
+  const adminUser = await prisma.usuario.upsert({
+    where: { tenantId_email: { tenantId: tenant.id, email: emailAdmin } },
+    update: { 
+        rolGlobal: "SUPERADMIN",
+        activo: true 
+    },
+    create: {
         id: "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
         email: emailAdmin,
         nombre: "Admin Demo",
         passwordHash: hashedPassword,
         tenantId: tenant.id,
+        rolGlobal: "SUPERADMIN",
         activo: true,
-      },
-    });
-  }
-
-  console.log(`Usuario admin creado: ${user.email}`);
-
-  // 5. Asignar Rol
-  const asignacion = await prisma.asignacionRol.findFirst({
-    where: {
-      usuarioId: user.id,
-      rolId: rolAdmin.id,
-      empresaId: empresa.id,
     }
   });
 
-  if (!asignacion) {
-    await prisma.asignacionRol.create({
-      data: {
-        usuarioId: user.id,
+  console.log(`Usuario superadmin SaaS listo: ${adminUser.email}`);
+
+  // 4b. Crear Usuario QA (Usuario regular)
+  const emailQA = "qa@retensaas.com";
+  await prisma.usuario.upsert({
+    where: { tenantId_email: { tenantId: tenant.id, email: emailQA } },
+    update: { 
+        rolGlobal: "USUARIO",
+        activo: true 
+    },
+    create: {
+        email: emailQA,
+        nombre: "QA Tester",
+        passwordHash: hashedPassword,
+        tenantId: tenant.id,
+        rolGlobal: "USUARIO",
+        activo: true,
+    }
+  });
+
+  // 5. Asignar Rol Operativo al admin
+  await prisma.asignacionRol.upsert({
+    where: {
+        usuarioId_rolId_empresaId: {
+            usuarioId: adminUser.id,
+            rolId: rolAdmin.id,
+            empresaId: empresa.id,
+        }
+    },
+    update: {},
+    create: {
+        usuarioId: adminUser.id,
         rolId: rolAdmin.id,
         empresaId: empresa.id,
-      },
-    });
-  }
+    }
+  });
 
   console.log("Seed completado con éxito.");
 }

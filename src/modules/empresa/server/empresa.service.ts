@@ -46,6 +46,17 @@ export async function createEmpresa(data: EmpresaFormValues, tenantId: string) {
     throw new Error("Ya existe una empresa con este RIF en tu organización.");
   }
 
+  // Verificar límites del SaaS
+  const org = await prisma.organizacion.findFirst({
+    where: { id: tenantId },
+    select: { limiteEmpresas: true, _count: { select: { empresas: { where: { deletedAt: null } } } } }
+  });
+
+  if (org?.limiteEmpresas && org._count.empresas >= org.limiteEmpresas) {
+    throw new Error("Tu organización alcanzó el límite de empresas permitidas por su plan actual.");
+  }
+
+
   return await prisma.$transaction(async (tx) => {
     const nuevaEmpresa = await tx.empresa.create({
       data: {

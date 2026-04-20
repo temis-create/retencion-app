@@ -57,6 +57,7 @@ export const authOptions: NextAuthOptions = {
           name: user.nombre,
           tenantId: user.tenantId,
           empresaActivaId: defaultEmpresa?.id || null,
+          rolGlobal: user.rolGlobal,
         };
       },
     }),
@@ -67,6 +68,7 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.tenantId = (user as any).tenantId;
         token.empresaActivaId = (user as any).empresaActivaId;
+        token.rolGlobal = (user as any).rolGlobal;
       }
       return token;
     },
@@ -75,6 +77,7 @@ export const authOptions: NextAuthOptions = {
         (session.user as any).id = token.id;
         (session.user as any).tenantId = token.tenantId;
         (session.user as any).empresaActivaId = token.empresaActivaId;
+        (session.user as any).rolGlobal = token.rolGlobal;
       }
       return session;
     },

@@ -13,7 +13,8 @@ import {
   Download,
   Receipt,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  ShieldCheck
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -69,11 +70,12 @@ export function DashboardSidebar({ user }: { user: any }) {
   return (
     <div className="flex h-full min-h-[100dvh] w-64 flex-col border-r border-zinc-200 bg-zinc-50">
       <div className="flex h-16 shrink-0 items-center px-6 border-b border-zinc-200">
-        <span className="text-xl font-bold tracking-tight text-indigo-600 flex items-center gap-2">
+        <span className="text-xl font-bold tracking-tight text-emerald-600 flex items-center gap-2">
           <div className="w-8 h-8 bg-zinc-900 text-white flex items-center justify-center rounded-md font-bold">R</div>
           RetenSaaS
         </span>
       </div>
+
       
       <div className="flex flex-1 flex-col overflow-y-auto px-4 py-6">
         <nav className="flex-1 space-y-1">
@@ -163,6 +165,23 @@ export function DashboardSidebar({ user }: { user: any }) {
               </div>
             );
           })}
+
+          {(user?.rolGlobal === "SUPERADMIN" || user?.rolGlobal === "ADMIN_SAAS") && (
+            <div className="pt-6 mt-6 border-t border-zinc-200">
+               <p className="text-[10px] font-bold uppercase tracking-wider text-rose-500 px-3 mb-2">
+                Zona de Administración
+              </p>
+              <Link
+                href="/dashboard-admin"
+                className="group flex items-center rounded-md px-3 py-2 text-sm font-bold text-rose-600 hover:bg-rose-50 transition-colors"
+              >
+                <div className="mr-3 h-5 w-5 flex-shrink-0 flex items-center justify-center rounded bg-rose-100">
+                  <ShieldCheck className="h-3 w-3" />
+                </div>
+                Panel Admin SaaS
+              </Link>
+            </div>
+          )}
         </nav>
       </div>
 
