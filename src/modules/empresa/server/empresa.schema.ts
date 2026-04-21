@@ -8,8 +8,8 @@ export const empresaSchema = z.object({
   agenteRetencionIVA: z.boolean().default(false),
   agenteRetencionISLR: z.boolean().default(false),
   logoUrl: z.string().optional().nullable(),
-  proximoCorrelativoIVA: z.number().int().min(1).default(1),
-  proximoCorrelativoISLR: z.number().int().min(1).default(1),
+  proximoCorrelativoIVA: z.number().int().min(1).max(99999999, "El correlativo no puede ser mayor a 8 dígitos (máx. 99,999,999)").default(1),
+  proximoCorrelativoISLR: z.number().int().min(1).max(99999999, "El correlativo no puede ser mayor a 8 dígitos (máx. 99,999,999)").default(1),
 });
 
 export type EmpresaFormValues = z.infer<typeof empresaSchema>;

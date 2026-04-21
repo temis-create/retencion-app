@@ -150,9 +150,11 @@ export function EmpresaForm({ initialData }: EmpresaFormProps) {
               id="proximoCorrelativoIVA"
               type="number"
               className="border border-zinc-300 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+              placeholder="Ej: 1"
               {...register("proximoCorrelativoIVA", { valueAsNumber: true })}
             />
-            {errors.proximoCorrelativoIVA && <span className="text-xs text-red-500">{errors.proximoCorrelativoIVA.message}</span>}
+            <span className="text-[10px] text-zinc-400">Ingrese solo el número consecutivo (ej. 1, 150). No incluya año ni mes.</span>
+            {errors.proximoCorrelativoIVA && <span className="text-xs text-red-500 font-medium">{errors.proximoCorrelativoIVA.message}</span>}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="proximoCorrelativoISLR" className="text-xs font-bold text-zinc-500 uppercase">Próx. Correlativo ISLR</label>
@@ -160,12 +162,16 @@ export function EmpresaForm({ initialData }: EmpresaFormProps) {
               id="proximoCorrelativoISLR"
               type="number"
               className="border border-zinc-300 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+              placeholder="Ej: 1"
               {...register("proximoCorrelativoISLR", { valueAsNumber: true })}
             />
-            {errors.proximoCorrelativoISLR && <span className="text-xs text-red-500">{errors.proximoCorrelativoISLR.message}</span>}
+            <span className="text-[10px] text-zinc-400">Ingrese solo el número consecutivo (ej. 1, 150). No incluya año ni mes.</span>
+            {errors.proximoCorrelativoISLR && <span className="text-xs text-red-500 font-medium">{errors.proximoCorrelativoISLR.message}</span>}
           </div>
         </div>
-        <p className="text-xs text-zinc-400 font-medium">Si la empresa ya tiene comprobantes emitidos fuera del sistema, indique aquí el siguiente número correlativo a emitir.</p>
+        <p className="text-xs text-zinc-500 bg-zinc-50 p-2 rounded border border-zinc-100">
+          <strong>Nota:</strong> El sistema generará automáticamente el número oficial (14 dígitos) anteponiendo el año y mes en curso. Solo especifique el número de secuencia.
+        </p>
       </div>
 
       <div className="flex items-center justify-end gap-3 pt-6 border-t border-zinc-200">
